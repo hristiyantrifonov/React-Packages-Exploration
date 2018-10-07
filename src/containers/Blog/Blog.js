@@ -4,7 +4,14 @@ import {Route, NavLink, Switch, Redirect} from 'react-router-dom';
 
 import './Blog.css';
 import Posts from './Posts/Posts';
-import NewPost from './NewPost/NewPost';
+import asyncComponent from '../../hoc/asyncComponent';
+// import NewPost from './NewPost/NewPost';
+
+const AsyncNewPost = asyncComponent(() => {
+    //Dynamic import - only imported upon execution of this function
+    //This now import new post only when the constant is used somewhere
+    return import('./NewPost/NewPost');
+});
 
 class Blog extends Component {
     state = {
@@ -43,7 +50,7 @@ class Blog extends Component {
                 {/*everything, so it will always show*/}
                 {/*<Route path="/" exact render={() => <h1>Home</h1>}/>*/}
                 <Switch> {/*only allows for one path to be rendered*/}
-                    {this.state.auth ? <Route path="/new-post" component={NewPost}/> : null}
+                    {this.state.auth ? <Route path="/new-post" component={AsyncNewPost}/> : null}
                     <Route path="/posts" component={Posts}/>
                     <Route render={() => <h1>Not found</h1>}/> {/*we are not authenticated and new post in not rendered so this catches it*/}
                     {/*<Redirect from="/" to="/posts"/> /!*from prop cannot be set on the Redirect outside the Switch*!/*/}
