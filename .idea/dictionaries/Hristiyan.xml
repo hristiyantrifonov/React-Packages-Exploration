@@ -2,6 +2,7 @@
   <dictionary name="Hristiyan">
     <words>
       <w>axios</w>
+      <w>unauth</w>
     </words>
   </dictionary>
 </component>

@@ -7,6 +7,10 @@ import Posts from './Posts/Posts';
 import NewPost from './NewPost/NewPost';
 
 class Blog extends Component {
+    state = {
+        auth: true
+    }
+
     render () {
         return (
             <div className="Blog">
@@ -39,9 +43,10 @@ class Blog extends Component {
                 {/*everything, so it will always show*/}
                 {/*<Route path="/" exact render={() => <h1>Home</h1>}/>*/}
                 <Switch> {/*only allows for one path to be rendered*/}
-                    <Route path="/new-post" component={NewPost}/>
+                    {this.state.auth ? <Route path="/new-post" component={NewPost}/> : null}
                     <Route path="/posts" component={Posts}/>
-                    <Redirect from="/" to="/posts"/> {/*from prop cannot be set on the Redirect outside the Switch*/}
+                    <Route render={() => <h1>Not found</h1>}/> {/*we are not authenticated and new post in not rendered so this catches it*/}
+                    {/*<Redirect from="/" to="/posts"/> /!*from prop cannot be set on the Redirect outside the Switch*!/*/}
                     {/*<Route path="/" component={Posts}/>*/}
                 </Switch>
 
